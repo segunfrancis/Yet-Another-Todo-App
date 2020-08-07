@@ -10,7 +10,9 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.ExpectedException
 
 /**
  * Created by SegunFrancis
@@ -18,6 +20,9 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class ListViewModelTest {
+
+    @get:Rule
+    val exceptionRule = ExpectedException.none()
     private lateinit var repository: ToDoRepository
 
     @Before
@@ -66,5 +71,13 @@ class ListViewModelTest {
                 assertEquals(expected, it)
             }
         }
+    }
+
+    @Test
+    fun test_toggleToDo() {
+        val id = "fake"
+        val model = ToDoListViewModel(repository)
+        exceptionRule.expect(NotImplementedError::class.java)
+        model.toggleToDo(id)
     }
 }
