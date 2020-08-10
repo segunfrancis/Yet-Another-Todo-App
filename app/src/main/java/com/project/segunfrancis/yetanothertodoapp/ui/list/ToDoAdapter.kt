@@ -5,6 +5,8 @@ import android.text.format.DateFormat
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.project.segunfrancis.yetanothertodoapp.data.ToDo
 import com.project.segunfrancis.yetanothertodoapp.databinding.TodoItemBinding
 import com.project.segunfrancis.yetanothertodoapp.hide
@@ -15,9 +17,7 @@ import java.util.*
  */
 
 class ToDoAdapter(private val onClickListener: OnItemClickListener) :
-    RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
-
-    private var allToDos: List<ToDo> = ArrayList()
+    ListAdapter<ToDo, ToDoAdapter.ToDoViewHolder>(MyDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoViewHolder {
         return ToDoViewHolder(
@@ -25,15 +25,8 @@ class ToDoAdapter(private val onClickListener: OnItemClickListener) :
         )
     }
 
-    override fun getItemCount() = allToDos.size
-
-    fun setToDos(toDos: List<ToDo>) {
-        this.allToDos = toDos
-        notifyDataSetChanged()
-    }
-
     override fun onBindViewHolder(holder: ToDoViewHolder, position: Int) =
-        holder.bind(allToDos[position], onClickListener)
+        holder.bind(getItem(position), onClickListener)
 
     class ToDoViewHolder(private val binding: TodoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -67,6 +60,17 @@ class ToDoAdapter(private val onClickListener: OnItemClickListener) :
                     )
                 )
             }
+        }
+    }
+
+    class MyDiffUtil : DiffUtil.ItemCallback<ToDo>() {
+        override fun areItemsTheSame(oldItem: ToDo, newItem: ToDo): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+
+        override fun areContentsTheSame(oldItem: ToDo, newItem: ToDo): Boolean {
+            return oldItem.equals(newItem)
         }
     }
 }

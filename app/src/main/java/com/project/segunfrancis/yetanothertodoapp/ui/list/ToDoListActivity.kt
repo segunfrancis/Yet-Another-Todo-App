@@ -38,7 +38,7 @@ class ToDoListActivity : AppCompatActivity(), OnItemClickListener {
         binding.include.listTodos.adapter = adapter
         toDoListViewModel.toDoList.observe(this, Observer { toDos ->
             binding.include.emptyImage.isVisible = toDos.isEmpty()
-            adapter.setToDos(toDos)
+            adapter.submitList(toDos)
         })
 
         toDoListViewModel.count.observe(this, Observer { count ->
