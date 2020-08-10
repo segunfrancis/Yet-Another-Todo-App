@@ -178,16 +178,17 @@ class ListViewModelTest {
     @Test
     fun test_deleteToDo() {
         val repository: ToDoRepository = mock()
-        val listModel = ToDoListViewModel(repository)
         val model = AddViewModel(repository)
+        val listModel = ToDoListViewModel(repository)
         val actualTitle = "Test ToDo"
         val actualDate = System.currentTimeMillis()
         val toDo = ToDo("1", actualTitle, now + day, true, actualDate)
         model.toDo.title = toDo.title
         model.toDo.dueDate = toDo.dueDate
+        model.save()
 
         runBlockingTest {
-            repository.insert(toDo)
+            //repository.insert(toDo)
             listModel.deleteToDo(toDo)
             verify(repository).delete(toDo)
         }
