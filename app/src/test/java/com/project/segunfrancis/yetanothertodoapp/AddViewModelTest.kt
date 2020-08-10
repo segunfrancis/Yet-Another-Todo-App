@@ -61,6 +61,6 @@ class AddViewModelTest {
         verify(
             repository,
             never()
-        ).insert(any()) // never() prevents the verify() method to be called when a toDo does'nt have a title
+        ).insert(any()) // never() prevents the verify() method from being called when a toDo does'nt have a title
     }
 }

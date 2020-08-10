@@ -11,15 +11,17 @@ import java.util.*
 
 class AddActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAddBinding
-    private lateinit var addViewModel: AddViewModel
+    private val binding: ActivityAddBinding by lazy {
+        ActivityAddBinding.inflate(layoutInflater)
+    }
+
+    private val addViewModel: AddViewModel by lazy {
+        obtainViewModel(AddViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        addViewModel = obtainViewModel(AddViewModel::class.java)
 
         binding.due.date = System.currentTimeMillis()
         binding.due.setOnDateChangeListener { _, year, month, day ->

@@ -16,5 +16,5 @@ interface ToDoRepository {
 
     fun getUpcomingToDosCount(): Flow<Int>
 
-    suspend fun delete(toDo: ToDo)
+    fun delete(toDo: ToDo)
 }

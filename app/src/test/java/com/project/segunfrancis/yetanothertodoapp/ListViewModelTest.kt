@@ -5,6 +5,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.project.segunfrancis.yetanothertodoapp.data.ToDo
 import com.project.segunfrancis.yetanothertodoapp.data.ToDoRepository
+import com.project.segunfrancis.yetanothertodoapp.ui.add.AddViewModel
 import com.project.segunfrancis.yetanothertodoapp.ui.list.ToDoListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -94,22 +95,22 @@ class ListViewModelTest {
         }
     }
 
-     @Test
-     fun test_upcomingToDosCountEmpty() {
-         val expected = 0
-         val repository: ToDoRepository = mock()
-         whenever(repository.getUpcomingToDosCount())
-             .thenReturn(flowOf(expected))
-         val model = ToDoListViewModel(repository)
-         val count = model.upcomingToDosCount
+    @Test
+    fun test_upcomingToDosCountEmpty() {
+        val expected = 0
+        val repository: ToDoRepository = mock()
+        whenever(repository.getUpcomingToDosCount())
+            .thenReturn(flowOf(expected))
+        val model = ToDoListViewModel(repository)
+        val count = model.upcomingToDosCount
 
-         assertNotNull(count)
-         runBlockingTest {
-             count.collect {
-                 assertEquals(expected, it)
-             }
-         }
-     }
+        assertNotNull(count)
+        runBlockingTest {
+            count.collect {
+                assertEquals(expected, it)
+            }
+        }
+    }
 
     @Test
     fun test_upcomingToDosCountSingle() {
@@ -145,17 +146,17 @@ class ListViewModelTest {
         }
     }
 
-     @Test
-     fun test_toggleToDo() {
-         val id = "fake"
-         val repository: ToDoRepository = mock()
-         val model = ToDoListViewModel(repository)
+    @Test
+    fun test_toggleToDo() {
+        val id = "fake"
+        val repository: ToDoRepository = mock()
+        val model = ToDoListViewModel(repository)
 
-         model.toggleToDo(id)
+        model.toggleToDo(id)
 
-         verify(repository)
-             .toggleTodo(id)
-     }
+        verify(repository)
+            .toggleTodo(id)
+    }
 
     @Test
     fun test_toggleToDoNotFound() {
@@ -172,5 +173,23 @@ class ListViewModelTest {
 
         verify(repository)
             .toggleTodo(id)
+    }
+
+    @Test
+    fun test_deleteToDo() {
+        val repository: ToDoRepository = mock()
+        val listModel = ToDoListViewModel(repository)
+        val model = AddViewModel(repository)
+        val actualTitle = "Test ToDo"
+        val actualDate = System.currentTimeMillis()
+        val toDo = ToDo("1", actualTitle, now + day, true, actualDate)
+        model.toDo.title = toDo.title
+        model.toDo.dueDate = toDo.dueDate
+
+        runBlockingTest {
+            repository.insert(toDo)
+            listModel.deleteToDo(toDo)
+            verify(repository).delete(toDo)
+        }
     }
 }

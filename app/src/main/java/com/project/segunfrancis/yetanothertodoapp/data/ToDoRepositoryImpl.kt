@@ -35,7 +35,7 @@ class ToDoRepositoryImpl(private val toDoDao: ToDoDao) : ToDoRepository {
         return toDoDao.getDateCount(System.currentTimeMillis())
     }
 
-    override suspend fun delete(toDo: ToDo) {
-        toDoDao.delete(toDo)
+    override fun delete(toDo: ToDo) {
+        GlobalScope.launch { toDoDao.delete(toDo) }
     }
 }

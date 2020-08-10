@@ -49,6 +49,6 @@ class ToDoListViewModel(private val toDoRepository: ToDoRepository) : ViewModel(
     }
 
     fun deleteToDo(toDo: ToDo) {
-        viewModelScope.launch { toDoRepository.delete(toDo) }
+        toDoRepository.delete(toDo)
     }
 }

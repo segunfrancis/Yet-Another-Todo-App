@@ -11,21 +11,24 @@ import com.project.segunfrancis.yetanothertodoapp.databinding.ActivityToDoListBi
 import com.project.segunfrancis.yetanothertodoapp.obtainViewModel
 import com.project.segunfrancis.yetanothertodoapp.ui.add.AddActivity
 
-class ToDoListActivity : AppCompatActivity(), ToDoAdapter.OnClickListener {
+class ToDoListActivity : AppCompatActivity(), OnItemClickListener {
 
-    private lateinit var binding: ActivityToDoListBinding
-    private lateinit var toDoListViewModel: ToDoListViewModel
+    private val binding: ActivityToDoListBinding by lazy {
+        ActivityToDoListBinding.inflate(layoutInflater)
+    }
+
+    private val toDoListViewModel: ToDoListViewModel by lazy {
+        obtainViewModel(ToDoListViewModel::class.java)
+    }
+
     private val adapter: ToDoAdapter by lazy {
         ToDoAdapter(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityToDoListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-
-        toDoListViewModel = obtainViewModel(ToDoListViewModel::class.java)
 
         binding.fab.setOnClickListener {
             startActivity(Intent(this@ToDoListActivity, AddActivity::class.java))

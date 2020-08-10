@@ -14,7 +14,7 @@ import java.util.*
  * Created by SegunFrancis
  */
 
-class ToDoAdapter(private val onClickListener: OnClickListener) :
+class ToDoAdapter(private val onClickListener: OnItemClickListener) :
     RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder>() {
 
     private var allToDos: List<ToDo> = ArrayList()
@@ -37,7 +37,7 @@ class ToDoAdapter(private val onClickListener: OnClickListener) :
 
     class ToDoViewHolder(private val binding: TodoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(toDo: ToDo, clickListener: OnClickListener) {
+        fun bind(toDo: ToDo, clickListener: OnItemClickListener) {
             binding.completed.isChecked = toDo.completed
             binding.completed.setOnClickListener { clickListener.onCheckboxChecked(toDo.id) }
             binding.delete.setOnClickListener { clickListener.onDeleteIconClicked(toDo) }
@@ -68,10 +68,5 @@ class ToDoAdapter(private val onClickListener: OnClickListener) :
                 )
             }
         }
-    }
-
-    interface OnClickListener {
-        fun onCheckboxChecked(id: String)
-        fun onDeleteIconClicked(toDo: ToDo)
     }
 }
