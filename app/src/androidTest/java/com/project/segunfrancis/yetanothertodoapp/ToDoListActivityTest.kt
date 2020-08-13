@@ -33,7 +33,7 @@ class ToDoListActivityTest {
     }
 
     @Test
-    fun test_navigateToNextActivity() {
+    fun test_navigateToAddActivity() {
         onView(withId(R.id.fab)).perform(click())
         intended(hasComponent(AddActivity::class.java.name))
     }
