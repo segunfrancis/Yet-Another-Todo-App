@@ -15,11 +15,10 @@ To run this code, clone this repository and import into android studio
 
 ## Screenshots
 <ul>
-  <img src="" width="40%" alt="Screen1" hspace="15">
-  <img src="" width="40%" alt="Screen2" hspace="15">
-  <img src="" width="40%" alt="Screen3" hspace="15">
-  <img src="" width="40%" alt="Screen4" hspace="15">
-  <img src="" width="40%" alt="Screen5" hspace="15">
+  <img src="https://github.com/segunfrancis/Yet-Another-Todo-App/blob/master/screenshots/Screenshot_20200811-190551_Yet%20Another%20Todo%20App.jpg" width="40%" alt="Screen1" hspace="15">
+  <img src="https://github.com/segunfrancis/Yet-Another-Todo-App/blob/master/screenshots/Screenshot_20200811-190610_Yet%20Another%20Todo%20App.jpg" width="40%" alt="Screen2" hspace="15">
+  <img src="https://github.com/segunfrancis/Yet-Another-Todo-App/blob/master/screenshots/Screenshot_20200811-190626_Yet%20Another%20Todo%20App.jpg" width="40%" alt="Screen3" hspace="15">
+  <img src="https://github.com/segunfrancis/Yet-Another-Todo-App/blob/master/screenshots/Screenshot_20200813-192229_Yet%20Another%20Todo%20App.jpg" width="40%" alt="Screen4" hspace="15">
 </ul>
 
 ## Built With
