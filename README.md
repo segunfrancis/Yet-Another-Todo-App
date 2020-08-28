@@ -1,4 +1,4 @@
-<img src="https://img.shields.io/badge/made%20with-kotlin-blue.svg?style=plastic">
+<img src="https://img.shields.io/badge/made%20with-kotlin-blue.svg?style=plastic"> <img src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=plastic">
 <br>
 
 # Yet-Another-Todo-App
