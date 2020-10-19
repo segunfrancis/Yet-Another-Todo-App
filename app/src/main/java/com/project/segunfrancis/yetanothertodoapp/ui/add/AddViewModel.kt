@@ -2,8 +2,10 @@ package com.project.segunfrancis.yetanothertodoapp.ui.add
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.project.segunfrancis.yetanothertodoapp.data.ToDo
 import com.project.segunfrancis.yetanothertodoapp.data.ToDoRepository
+import kotlinx.coroutines.launch
 import java.util.*
 
 /**
@@ -24,7 +26,7 @@ class AddViewModel @ViewModelInject constructor(private val toDoRepository: ToDo
         if (toDo.title == "") return "Title is required"
 
         toDo.created = System.currentTimeMillis()
-        toDoRepository.insert(toDo)
+        viewModelScope.launch { toDoRepository.insert(toDo) }
         return null
     }
 }
