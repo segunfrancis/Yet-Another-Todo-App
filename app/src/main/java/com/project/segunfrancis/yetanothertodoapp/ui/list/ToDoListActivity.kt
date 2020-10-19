@@ -2,26 +2,25 @@ package com.project.segunfrancis.yetanothertodoapp.ui.list
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.segunfrancis.yetanothertodoapp.data.ToDo
 import com.project.segunfrancis.yetanothertodoapp.databinding.ActivityToDoListBinding
-import com.project.segunfrancis.yetanothertodoapp.obtainViewModel
 import com.project.segunfrancis.yetanothertodoapp.ui.add.AddActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ToDoListActivity : AppCompatActivity(), OnItemClickListener {
 
     private val binding: ActivityToDoListBinding by lazy {
         ActivityToDoListBinding.inflate(layoutInflater)
     }
 
-    private val toDoListViewModel: ToDoListViewModel by lazy {
-        obtainViewModel(ToDoListViewModel::class.java)
-    }
+    private val toDoListViewModel: ToDoListViewModel by viewModels()
 
-    private val adapter: ToDoAdapter by lazy {
+    private val toDoAdapter: ToDoAdapter by lazy {
         ToDoAdapter(this)
     }
 
@@ -34,14 +33,17 @@ class ToDoListActivity : AppCompatActivity(), OnItemClickListener {
             startActivity(Intent(this@ToDoListActivity, AddActivity::class.java))
         }
 
-        binding.include.listTodos.layoutManager = LinearLayoutManager(this)
-        binding.include.listTodos.adapter = adapter
-        toDoListViewModel.toDoList.observe(this, Observer { toDos ->
+        binding.include.listTodos.apply {
+            layoutManager = LinearLayoutManager(this@ToDoListActivity)
+            adapter = toDoAdapter
+        }
+
+        toDoListViewModel.toDoList.observe(this, { toDos ->
             binding.include.emptyImage.isVisible = toDos.isEmpty()
-            adapter.submitList(toDos)
+            toDoAdapter.submitList(toDos)
         })
 
-        toDoListViewModel.count.observe(this, Observer { count ->
+        toDoListViewModel.count.observe(this, { count ->
             binding.include.soonValue.text = count.toString()
         })
     }

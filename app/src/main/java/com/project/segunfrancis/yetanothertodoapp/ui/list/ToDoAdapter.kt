@@ -70,7 +70,7 @@ class ToDoAdapter(private val onClickListener: OnItemClickListener) :
 
 
         override fun areContentsTheSame(oldItem: ToDo, newItem: ToDo): Boolean {
-            return oldItem.equals(newItem)
+            return oldItem == newItem
         }
     }
 }

@@ -2,22 +2,22 @@ package com.project.segunfrancis.yetanothertodoapp.ui.add
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.project.segunfrancis.yetanothertodoapp.databinding.ActivityAddBinding
 import com.project.segunfrancis.yetanothertodoapp.hide
-import com.project.segunfrancis.yetanothertodoapp.obtainViewModel
 import com.project.segunfrancis.yetanothertodoapp.show
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 class AddActivity : AppCompatActivity() {
 
     private val binding: ActivityAddBinding by lazy {
         ActivityAddBinding.inflate(layoutInflater)
     }
 
-    private val addViewModel: AddViewModel by lazy {
-        obtainViewModel(AddViewModel::class.java)
-    }
+    private val addViewModel: AddViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

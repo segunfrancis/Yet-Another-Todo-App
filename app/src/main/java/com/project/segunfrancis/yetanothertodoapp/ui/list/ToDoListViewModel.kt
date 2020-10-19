@@ -1,5 +1,6 @@
 package com.project.segunfrancis.yetanothertodoapp.ui.list
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.project.segunfrancis.yetanothertodoapp.data.ToDo
 import com.project.segunfrancis.yetanothertodoapp.data.ToDoRepository
@@ -10,7 +11,8 @@ import kotlinx.coroutines.launch
  * Created by SegunFrancis
  */
 
-class ToDoListViewModel(private val toDoRepository: ToDoRepository) : ViewModel() {
+class ToDoListViewModel @ViewModelInject constructor(private val toDoRepository: ToDoRepository) :
+    ViewModel() {
 
     private var _toDoList = MutableLiveData<List<ToDo>>()
     val toDoList: LiveData<List<ToDo>>

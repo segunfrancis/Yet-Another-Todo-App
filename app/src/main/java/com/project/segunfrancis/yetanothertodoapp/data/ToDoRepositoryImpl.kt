@@ -3,12 +3,13 @@ package com.project.segunfrancis.yetanothertodoapp.data
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Created by SegunFrancis
  */
 
-class ToDoRepositoryImpl(private val toDoDao: ToDoDao) : ToDoRepository {
+class ToDoRepositoryImpl @Inject constructor(private val toDoDao: ToDoDao) : ToDoRepository {
 
     override fun getAllToDos(): Flow<List<ToDo>> {
         return toDoDao.getAllToDos()
