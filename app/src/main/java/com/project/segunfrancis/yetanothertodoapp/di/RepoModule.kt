@@ -17,5 +17,4 @@ abstract class RepoModule {
 
     @Binds
     abstract fun bindRepository(repositoryImpl: ToDoRepositoryImpl): ToDoRepository
-
 }

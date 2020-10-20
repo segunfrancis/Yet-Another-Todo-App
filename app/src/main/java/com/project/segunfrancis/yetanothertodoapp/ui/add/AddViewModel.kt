@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.segunfrancis.yetanothertodoapp.data.ToDo
 import com.project.segunfrancis.yetanothertodoapp.data.ToDoRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -12,7 +13,10 @@ import java.util.*
  * Created by SegunFrancis
  */
 
-class AddViewModel @ViewModelInject constructor(private val toDoRepository: ToDoRepository) :
+class AddViewModel @ViewModelInject constructor(
+    private val toDoRepository: ToDoRepository,
+    private val dispatcher: CoroutineDispatcher
+) :
     ViewModel() {
     val toDo = ToDo(
         UUID.randomUUID().toString(),
@@ -26,7 +30,7 @@ class AddViewModel @ViewModelInject constructor(private val toDoRepository: ToDo
         if (toDo.title == "") return "Title is required"
 
         toDo.created = System.currentTimeMillis()
-        viewModelScope.launch { toDoRepository.insert(toDo) }
+        viewModelScope.launch(dispatcher) { toDoRepository.insert(toDo) }
         return null
     }
 }

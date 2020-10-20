@@ -68,7 +68,7 @@ dependencies {
 
     // Testing
     testImplementation "junit:junit:$jUnit_version"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.9"
     testImplementation "org.mockito:mockito-inline:$mockito_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$nhaarman_mockito_version"
     testImplementation "androidx.arch.core:core-testing:$androidx_core_test_version"

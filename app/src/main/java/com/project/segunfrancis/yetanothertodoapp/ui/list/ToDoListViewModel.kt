@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.project.segunfrancis.yetanothertodoapp.asLiveData
 import com.project.segunfrancis.yetanothertodoapp.data.ToDo
 import com.project.segunfrancis.yetanothertodoapp.data.ToDoRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -12,7 +13,10 @@ import kotlinx.coroutines.launch
  * Created by SegunFrancis
  */
 
-class ToDoListViewModel @ViewModelInject constructor(private val toDoRepository: ToDoRepository) :
+class ToDoListViewModel @ViewModelInject constructor(
+    private val toDoRepository: ToDoRepository,
+    private val coroutineDispatcher: CoroutineDispatcher
+) :
     ViewModel() {
 
     private var _toDoList = MutableLiveData<List<ToDo>>()
@@ -30,7 +34,7 @@ class ToDoListViewModel @ViewModelInject constructor(private val toDoRepository:
     }
 
     private fun getToDos() {
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineDispatcher) {
             allToDos.collect {
                 _toDoList.postValue(it)
             }
@@ -38,7 +42,7 @@ class ToDoListViewModel @ViewModelInject constructor(private val toDoRepository:
     }
 
     private fun getUpcomingToDosCount() {
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineDispatcher) {
             upcomingToDosCount.collect {
                 _count.postValue(it)
             }
@@ -46,13 +50,13 @@ class ToDoListViewModel @ViewModelInject constructor(private val toDoRepository:
     }
 
     fun toggleToDo(id: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineDispatcher) {
             toDoRepository.toggleTodo(id)
         }
     }
 
     fun deleteToDo(toDo: ToDo) {
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineDispatcher) {
             toDoRepository.delete(toDo)
         }
     }

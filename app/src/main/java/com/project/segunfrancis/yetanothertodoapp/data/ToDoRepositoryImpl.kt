@@ -1,6 +1,7 @@
 package com.project.segunfrancis.yetanothertodoapp.data
 
 import kotlinx.coroutines.flow.Flow
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 /**
@@ -22,7 +23,7 @@ class ToDoRepositoryImpl @Inject constructor(private val toDoDao: ToDoDao) : ToD
 
     override suspend fun toggleTodo(id: String) {
         require(toDoDao.toggleTodo(id) == 1) {
-            "Todo not found"
+            throw IllegalArgumentException("Todo not found")
         }
     }
 
