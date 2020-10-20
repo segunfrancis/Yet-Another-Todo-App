@@ -1,18 +1,11 @@
 package com.project.segunfrancis.yetanothertodoapp
 
 import android.app.Application
-import com.project.segunfrancis.yetanothertodoapp.data.ToDoRepository
-import com.project.segunfrancis.yetanothertodoapp.data.ToDoRepositoryImpl
-import com.project.segunfrancis.yetanothertodoapp.data.ToDoRoomDatabase
+import dagger.hilt.android.HiltAndroidApp
 
 /**
  * Created by SegunFrancis
  */
 
-class ToDoApplication : Application() {
-
-    val toDoRepository: ToDoRepository
-        get() = ToDoRepositoryImpl(
-            ToDoRoomDatabase.getInstance(this.applicationContext)!!.todoDao()
-        )
-}
+@HiltAndroidApp
+class ToDoApplication : Application()

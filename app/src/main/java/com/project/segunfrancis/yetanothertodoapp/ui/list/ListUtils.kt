@@ -1,11 +1,13 @@
 package com.project.segunfrancis.yetanothertodoapp.ui.list
 
+import androidx.annotation.VisibleForTesting
 import com.project.segunfrancis.yetanothertodoapp.R
 
 /**
  * Created by SegunFrancis
  */
 
+@VisibleForTesting
 fun determineCardColor(dueDate: Long?, done: Boolean): Int {
     var color = R.color.todoNotDue
 

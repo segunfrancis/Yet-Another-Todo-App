@@ -10,11 +10,11 @@ interface ToDoRepository {
 
     fun getAllToDos(): Flow<List<ToDo>>
 
-    fun insert(toDo: ToDo)
+    suspend fun insert(toDo: ToDo)
 
-    fun toggleTodo(id: String)
+    suspend fun toggleTodo(id: String)
 
     fun getUpcomingToDosCount(): Flow<Int>
 
-    fun delete(toDo: ToDo)
+    suspend fun delete(toDo: ToDo)
 }

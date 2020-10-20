@@ -10,18 +10,21 @@ import com.project.segunfrancis.yetanothertodoapp.ui.list.ToDoListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
+import org.junit.runner.RunWith
+import org.junit.runners.BlockJUnit4ClassRunner
+import java.lang.IllegalArgumentException
 
 /**
  * Created by SegunFrancis
  */
 
 @ExperimentalCoroutinesApi
+@RunWith(BlockJUnit4ClassRunner::class)
 class ListViewModelTest {
 
     private val now = System.currentTimeMillis()
@@ -30,25 +33,26 @@ class ListViewModelTest {
     @get:Rule
     val exceptionRule = ExpectedException.none()
 
+    @get:Rule
+    val coroutineRule: MainCoroutineRule = MainCoroutineRule()
+
     @Test
-    fun test_allToDosEmpty() {
+    fun test_allToDosEmpty() = coroutineRule.runBlockingTest {
         val expected = 0
         val repository: ToDoRepository = mock()
         whenever(repository.getAllToDos())
             .thenReturn(flowOf(arrayListOf()))
-        val model = ToDoListViewModel(repository)
+        val model = ToDoListViewModel(repository, coroutineRule.testDispatcher)
         val toDos = model.allToDos
 
         assertNotNull(toDos)
-        runBlockingTest {
-            toDos.collect {
-                assertEquals(expected, it.size)
-            }
+        toDos.collect {
+            assertEquals(expected, it.size)
         }
     }
 
     @Test
-    fun test_allToDosSingle() {
+    fun test_allToDosSingle() = coroutineRule.runBlockingTest {
         val expected = 1
         val repository: ToDoRepository = mock()
         whenever(repository.getAllToDos())
@@ -59,19 +63,17 @@ class ListViewModelTest {
                     )
                 )
             )
-        val model = ToDoListViewModel(repository)
+        val model = ToDoListViewModel(repository, coroutineRule.testDispatcher)
         val toDos = model.allToDos
 
         assertNotNull(toDos)
-        runBlockingTest {
-            toDos.collect {
-                assertEquals(expected, it.size)
-            }
+        toDos.collect {
+            assertEquals(expected, it.size)
         }
     }
 
     @Test
-    fun test_allToDosMultiple() {
+    fun test_allToDosMultiple() = coroutineRule.runBlockingTest {
         val expected = 3
         val repository: ToDoRepository = mock()
         whenever(repository.getAllToDos())
@@ -84,73 +86,65 @@ class ListViewModelTest {
                     )
                 )
             )
-        val model = ToDoListViewModel(repository)
+        val model = ToDoListViewModel(repository, coroutineRule.testDispatcher)
         val toDos = model.allToDos
 
         assertNotNull(toDos)
-        runBlockingTest {
-            toDos.collect {
-                assertEquals(expected, it.size)
-            }
+        toDos.collect {
+            assertEquals(expected, it.size)
         }
     }
 
     @Test
-    fun test_upcomingToDosCountEmpty() {
+    fun test_upcomingToDosCountEmpty() = coroutineRule.runBlockingTest {
         val expected = 0
         val repository: ToDoRepository = mock()
         whenever(repository.getUpcomingToDosCount())
             .thenReturn(flowOf(expected))
-        val model = ToDoListViewModel(repository)
+        val model = ToDoListViewModel(repository, coroutineRule.testDispatcher)
         val count = model.upcomingToDosCount
 
         assertNotNull(count)
-        runBlockingTest {
-            count.collect {
-                assertEquals(expected, it)
-            }
+        count.collect {
+            assertEquals(expected, it)
         }
     }
 
     @Test
-    fun test_upcomingToDosCountSingle() {
+    fun test_upcomingToDosCountSingle() = coroutineRule.runBlockingTest {
         val expected = 1
         val repository: ToDoRepository = mock()
         whenever(repository.getUpcomingToDosCount())
             .thenReturn(flowOf(expected))
-        val model = ToDoListViewModel(repository)
+        val model = ToDoListViewModel(repository, coroutineRule.testDispatcher)
         val count = model.upcomingToDosCount
 
         assertNotNull(count)
-        runBlockingTest {
-            count.collect {
-                assertEquals(expected, it)
-            }
+        count.collect {
+            assertEquals(expected, it)
         }
     }
 
     @Test
-    fun test_upcomingToDosCountMultiple() {
+    fun test_upcomingToDosCountMultiple() = coroutineRule.runBlockingTest {
         val expected = 5
         val repository: ToDoRepository = mock()
         whenever(repository.getUpcomingToDosCount())
             .thenReturn(flowOf(expected))
-        val model = ToDoListViewModel(repository)
+        val model = ToDoListViewModel(repository, coroutineRule.testDispatcher)
         val count = model.upcomingToDosCount
 
         assertNotNull(count)
-        runBlockingTest {
-            count.collect {
-                assertEquals(expected, it)
-            }
+        count.collect {
+            assertEquals(expected, it)
         }
     }
 
     @Test
-    fun test_toggleToDo() {
+    fun test_toggleToDo() = coroutineRule.runBlockingTest {
         val id = "fake"
         val repository: ToDoRepository = mock()
-        val model = ToDoListViewModel(repository)
+        val model = ToDoListViewModel(repository, coroutineRule.testDispatcher)
 
         model.toggleToDo(id)
 
@@ -159,27 +153,25 @@ class ListViewModelTest {
     }
 
     @Test
-    fun test_toggleToDoNotFound() {
+    fun test_toggleToDoNotFound() = coroutineRule.runBlockingTest {
         val repository: ToDoRepository = mock()
         val id = "fake"
         val exceptionMessage = "Todo not found"
-
         whenever(repository.toggleTodo(id))
             .thenThrow(IllegalArgumentException(exceptionMessage))
-        val model = ToDoListViewModel(repository)
+        val model = ToDoListViewModel(repository, coroutineRule.testDispatcher)
         exceptionRule.expect(IllegalArgumentException::class.java)
         exceptionRule.expectMessage(exceptionMessage)
         model.toggleToDo(id)
-
         verify(repository)
             .toggleTodo(id)
     }
 
     @Test
-    fun test_deleteToDo() {
+    fun test_deleteToDo() = coroutineRule.runBlockingTest {
         val repository: ToDoRepository = mock()
-        val model = AddViewModel(repository)
-        val listModel = ToDoListViewModel(repository)
+        val model = AddViewModel(repository, coroutineRule.testDispatcher)
+        val listModel = ToDoListViewModel(repository, coroutineRule.testDispatcher)
         val actualTitle = "Test ToDo"
         val actualDate = System.currentTimeMillis()
         val toDo = ToDo("1", actualTitle, now + day, true, actualDate)
@@ -187,10 +179,7 @@ class ListViewModelTest {
         model.toDo.dueDate = toDo.dueDate
         model.save()
 
-        runBlockingTest {
-            //repository.insert(toDo)
-            listModel.deleteToDo(toDo)
-            verify(repository).delete(toDo)
-        }
+        listModel.deleteToDo(toDo)
+        verify(repository).delete(toDo)
     }
 }
