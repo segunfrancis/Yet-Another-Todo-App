@@ -30,6 +30,8 @@ To run this code, clone this repository and import into android studio
   * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
   * [Room](https://developer.android.com/topic/libraries/architecture/room)
 * [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines) - Concurrency design pattern used on Android to simplify code that executes asynchronously.
+* [Flow](https://kotlinlang.org/docs/reference/coroutines/flow.html) - Kotlin API that can return multiple asynchronously computed values.
+* [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - A dependency injection library for Android that reduces the boilerplate of doing manual dependency injection in your project.
 * [Mockito](https://site.mockito.org/) - Mockito is a mocking framework that lets you write beautiful tests with a clean & simple API.
 * [Espresso](https://developer.android.com/training/testing/espresso) - User Interface testing library for android.
 * [Mockito-Kotlin](https://github.com/nhaarman/mockito-kotlin) - A library that provides helper functions to work with Mockito in kotlin.
